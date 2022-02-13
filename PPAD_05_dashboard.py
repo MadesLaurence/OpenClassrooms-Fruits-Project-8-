@@ -133,7 +133,7 @@ def graphe_scatter_decision_bivariables(df, x_var_name, y_var_name, title, x_lab
 
     # Représenter le nuage de points 
     nuage = alt.Chart(df).mark_circle(size=DOT_SIZE).encode(x=alt.X(x_var_name, title=x_lab), y=alt.Y(y_var_name, title=y_lab), 
-        color=alt.condition(alt.datum.PRED_new == 1, alt.value(ORANGE), alt.value(VERT)))
+        color=alt.condition(alt.datum.PRED == 1, alt.value(ORANGE), alt.value(VERT)))
     
     # Représenter la demande  
     df_dem = df[df.index == line][[x_var_name, y_var_name]]
@@ -247,7 +247,7 @@ with st.sidebar:
 
     # Afficher la décision -----------------------------
     bg_col=VERT; col=VERT_CLAIR; dec= 'Accord';   
-    if df_dash_pred['PRED_new'].iloc[ligne] == 1: 
+    if df_dash_pred['PRED'].iloc[ligne] == 1: 
         bg_col=ORANGE; col=ORANGE_CLAIR; dec= 'Refus';
     style='"background-color:'+bg_col+';color:'+col+';text-align:center;font-size:24px"'
     html=f'<h1 style='+style+'>'+dec+'</h1>'
