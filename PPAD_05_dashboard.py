@@ -3,6 +3,9 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import numpy as np
 import pandas as pd
+import matplotlib
+import matplotlib.pyplot as plt
+
 
 ############### Déclaration des constantes #################################################### 
 # Demande par défaut à la première connection
@@ -139,8 +142,6 @@ def graphe_scatter_decision_bivariables(df, x_var_name, y_var_name, title, x_lab
 
 @st.cache(allow_output_mutation=True)
 def graphe_fonction_cout(df, threshold, line):
-
-    import matplotlib.pyplot as plt
 
     plot = plt.figure(figsize=(12, 8))
     plt.plot(df['Seuil']*100, df['Cout'])
