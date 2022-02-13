@@ -3,9 +3,6 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import numpy as np
 import pandas as pd
-from matplotlib import figure
-import matplotlib.pyplot as plt
-
 
 ############### Déclaration des constantes #################################################### 
 # Demande par défaut à la première connection
@@ -140,21 +137,24 @@ def graphe_scatter_decision_bivariables(df, x_var_name, y_var_name, title, x_lab
 
     return nuage+demande
 
-#@st.cache(allow_output_mutation=True)
-#def graphe_fonction_cout(df, threshold, line):
-#    plot = plt.figure(figsize=(12, 8))
-#    plt.plot(df['Seuil']*100, df['Cout'])
-#    plt.xlabel("Seuil de probabilité")
-#    plt.ylabel("Coût")
-#    plt.title("Coût en fonction du seuil de probabilité")
-#    cost_min = 0; cost_max = df['Cout'].max(); # Calculer les coordonnées du minimum
-#    plt.plot([threshold*100, threshold*100], [cost_min + 1, cost_max], color='darkred')    
-#    label = "Seuil : "+str(np.round(threshold*100, 1))+"%, Coût global : "+str(np.round(df['Cout'].min(), 1))+"M€"
-#    plt.annotate(label, (threshold*100+2, 16), textcoords="offset points", xytext=(0, 0), ha='left', color='darkred') 
-#    plt.plot([proba_dem, proba_dem], [cost_min, cost_max], color='purple')   
-#    label2 = "Demande : "+str(proba_dem)+"%"
-#    plt.annotate(label2, (proba_dem+2, 0), textcoords="offset points", xytext=(0, 0), ha='left', color='purple') 
-#    return plot
+@st.cache(allow_output_mutation=True)
+def graphe_fonction_cout(df, threshold, line):
+
+    import matplotlib.pyplot as plt
+
+    plot = plt.figure(figsize=(12, 8))
+    plt.plot(df['Seuil']*100, df['Cout'])
+    plt.xlabel("Seuil de probabilité")
+    plt.ylabel("Coût")
+    plt.title("Coût en fonction du seuil de probabilité")
+    cost_min = 0; cost_max = df['Cout'].max(); # Calculer les coordonnées du minimum
+    plt.plot([threshold*100, threshold*100], [cost_min + 1, cost_max], color='darkred')    
+    label = "Seuil : "+str(np.round(threshold*100, 1))+"%, Coût global : "+str(np.round(df['Cout'].min(), 1))+"M€"
+    plt.annotate(label, (threshold*100+2, 16), textcoords="offset points", xytext=(0, 0), ha='left', color='darkred') 
+    plt.plot([proba_dem, proba_dem], [cost_min, cost_max], color='purple')   
+    label2 = "Demande : "+str(proba_dem)+"%"
+    plt.annotate(label2, (proba_dem+2, 0), textcoords="offset points", xytext=(0, 0), ha='left', color='purple') 
+    return plot
 
 def lire_ligne():
     file=open("PPAD_05_ligne.txt", "r")
@@ -359,4 +359,4 @@ if selected == "La demande représentée sur la fonction de coût":
     st.subheader(selected)
     
     # Afficher la fonction de coût -----------------------------
-#    st.pyplot(graphe_fonction_cout(df_cost, threshold_min, ligne))
+    st.pyplot(graphe_fonction_cout(df_cost, threshold_min, ligne))
