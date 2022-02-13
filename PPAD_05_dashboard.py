@@ -175,7 +175,6 @@ st.set_page_config(page_title="Explication de la décision", initial_sidebar_sta
 
 # Charger les données
 df_dash_desc, df_dash_pred, df_feature_imp, df_cost = load_data(500)
-st.table(df_dash_desc)
 
 # Pour renommer les variables
 df_ref = pd.DataFrame({
